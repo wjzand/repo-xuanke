@@ -13,7 +13,6 @@ export const Mine = () => {
   const userData = useAppStore((s) => s.userData);
   const getMyReviews = useAppStore((s) => s.getMyReviews);
   const clearAllData = useAppStore((s) => s.clearAllData);
-  const showToast = useAppStore((s) => s.showToast);
 
   const [showConfirm, setShowConfirm] = useState(false);
 

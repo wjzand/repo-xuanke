@@ -10,6 +10,7 @@ export const Compare = () => {
   const courses = useAppStore((s) => s.courses);
   const compareList = useAppStore((s) => s.userData.compareList);
   const removeFromCompare = useAppStore((s) => s.removeFromCompare);
+  const showToast = useAppStore((s) => s.showToast);
 
   const compareCourses = compareList
     .map((id) => courses.find((c) => c.id === id))
@@ -61,7 +62,7 @@ export const Compare = () => {
                       <th key={course.id} className="px-4 py-4 text-center border-b border-gray-50 min-w-[140px]">
                         <div className="relative">
                           <button
-                            onClick={() => removeFromCompare(course.id)}
+                            onClick={() => { removeFromCompare(course.id); showToast('已移出对比'); }}
                             className="absolute -top-2 -right-2 w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center text-gray-400 hover:bg-red-50 hover:text-red-500 transition-colors"
                           >
                             <X size={14} />

@@ -15,11 +15,9 @@ interface AppState {
   setSearchKeyword: (keyword: string) => void;
 
   toggleFavorite: (courseId: string) => void;
-  isFavorite: (courseId: string) => boolean;
 
-  addToCompare: (courseId: string) => boolean;
+  toggleCompare: (courseId: string) => void;
   removeFromCompare: (courseId: string) => void;
-  isInCompare: (courseId: string) => boolean;
 
   toggleLike: (courseId: string, reviewId: string) => void;
 
@@ -31,6 +29,8 @@ interface AppState {
 
   clearAllData: () => void;
 }
+
+let toastTimer: ReturnType<typeof setTimeout> | null = null;
 
 export const useAppStore = create<AppState>((set, get) => ({
   courses: [],
@@ -65,23 +65,23 @@ export const useAppStore = create<AppState>((set, get) => ({
     get().showToast(msg);
   },
 
-  isFavorite: (courseId) => get().userData.favorites.includes(courseId),
-
-  addToCompare: (courseId) => {
+  toggleCompare: (courseId) => {
     const { userData } = get();
     if (userData.compareList.includes(courseId)) {
-      get().showToast('该课程已在对比列表');
-      return false;
+      const newUserData = { ...userData, compareList: userData.compareList.filter((id) => id !== courseId) };
+      saveUserData(newUserData);
+      set({ userData: newUserData });
+      get().showToast('已移出对比');
+    } else {
+      if (userData.compareList.length >= 3) {
+        get().showToast('最多对比3门课程');
+        return;
+      }
+      const newUserData = { ...userData, compareList: [...userData.compareList, courseId] };
+      saveUserData(newUserData);
+      set({ userData: newUserData });
+      get().showToast('已加入对比');
     }
-    if (userData.compareList.length >= 3) {
-      get().showToast('最多对比3门课程');
-      return false;
-    }
-    const newUserData = { ...userData, compareList: [...userData.compareList, courseId] };
-    saveUserData(newUserData);
-    set({ userData: newUserData });
-    get().showToast('已加入对比');
-    return true;
   },
 
   removeFromCompare: (courseId) => {
@@ -90,8 +90,6 @@ export const useAppStore = create<AppState>((set, get) => ({
     saveUserData(newUserData);
     set({ userData: newUserData });
   },
-
-  isInCompare: (courseId) => get().userData.compareList.includes(courseId),
 
   toggleLike: (courseId, reviewId) => {
     const { courses } = get();
@@ -153,9 +151,14 @@ export const useAppStore = create<AppState>((set, get) => ({
   },
 
   showToast: (message) => {
+    if (toastTimer) {
+      clearTimeout(toastTimer);
+      toastTimer = null;
+    }
     set({ toast: { message, visible: true } });
-    setTimeout(() => {
+    toastTimer = setTimeout(() => {
       set({ toast: null });
+      toastTimer = null;
     }, 2000);
   },
 

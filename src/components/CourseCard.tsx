@@ -14,21 +14,16 @@ interface CourseCardProps {
 export const CourseCard = ({ course, showActions = true }: CourseCardProps) => {
   const navigate = useNavigate();
   const toggleFavorite = useAppStore((s) => s.toggleFavorite);
-  const isFavorite = useAppStore((s) => s.isFavorite);
-  const addToCompare = useAppStore((s) => s.addToCompare);
-  const removeFromCompare = useAppStore((s) => s.removeFromCompare);
-  const isInCompare = useAppStore((s) => s.isInCompare);
+  const toggleCompare = useAppStore((s) => s.toggleCompare);
+  const favorites = useAppStore((s) => s.userData.favorites);
+  const compareList = useAppStore((s) => s.userData.compareList);
 
-  const fav = isFavorite(course.id);
-  const inCompare = isInCompare(course.id);
+  const fav = favorites.includes(course.id);
+  const inCompare = compareList.includes(course.id);
 
   const handleCompareToggle = (e: React.MouseEvent) => {
     e.stopPropagation();
-    if (inCompare) {
-      removeFromCompare(course.id);
-    } else {
-      addToCompare(course.id);
-    }
+    toggleCompare(course.id);
   };
 
   const handleFavorite = (e: React.MouseEvent) => {

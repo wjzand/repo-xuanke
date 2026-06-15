@@ -6,7 +6,7 @@ import { StarRating } from '@/components/StarRating';
 import { TagBadge } from '@/components/TagBadge';
 import { ReviewItem } from '@/components/ReviewItem';
 import { ReviewModal } from '@/components/ReviewModal';
-import { getRatingColor, getRatingBgColor } from '@/utils/helpers';
+import { getRatingColor } from '@/utils/helpers';
 
 export const CourseDetail = () => {
   const { id } = useParams<{ id: string }>();
@@ -14,15 +14,15 @@ export const CourseDetail = () => {
   const [searchParams] = useSearchParams();
   const courses = useAppStore((s) => s.courses);
   const toggleFavorite = useAppStore((s) => s.toggleFavorite);
-  const isFavorite = useAppStore((s) => s.isFavorite);
-  const addToCompare = useAppStore((s) => s.addToCompare);
-  const isInCompare = useAppStore((s) => s.isInCompare);
+  const toggleCompare = useAppStore((s) => s.toggleCompare);
+  const favorites = useAppStore((s) => s.userData.favorites);
+  const compareList = useAppStore((s) => s.userData.compareList);
 
   const [reviewModalOpen, setReviewModalOpen] = useState(false);
 
   const course = courses.find((c) => c.id === id);
-  const fav = course ? isFavorite(course.id) : false;
-  const inCompare = course ? isInCompare(course.id) : false;
+  const fav = course ? favorites.includes(course.id) : false;
+  const inCompare = course ? compareList.includes(course.id) : false;
 
   useEffect(() => {
     if (searchParams.get('write') === '1' && course) {
@@ -45,7 +45,6 @@ export const CourseDetail = () => {
 
   const sortedReviews = [...course.reviews].sort((a, b) => (a.date < b.date ? 1 : -1));
   const ratingColor = getRatingColor(course.rating);
-  const ratingBgColor = getRatingBgColor(course.rating);
 
   return (
     <div className="min-h-screen bg-gray-50 pb-24">
@@ -148,14 +147,7 @@ export const CourseDetail = () => {
           </button>
 
           <button
-            onClick={() => {
-              if (inCompare) {
-                useAppStore.getState().removeFromCompare(course.id);
-                useAppStore.getState().showToast('已移出对比');
-              } else {
-                addToCompare(course.id);
-              }
-            }}
+            onClick={() => toggleCompare(course.id)}
             className="flex-shrink-0 flex flex-col items-center justify-center w-14 active:scale-95 transition-transform"
           >
             <GitCompare
