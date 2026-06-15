@@ -14,6 +14,8 @@ export const initMockData = (): Course[] => {
       tags: ['挂科率高', '作业超多', '需要基础'],
       tagTypes: ['danger', 'danger', 'gray'],
       reviewCount: 3,
+      credits: 5,
+      isRare: false,
       reviews: [
         {
           id: 'r1',
@@ -68,6 +70,8 @@ export const initMockData = (): Course[] => {
       tags: ['轻松过', '给分大方', '不考勤'],
       tagTypes: ['success', 'success', 'success'],
       reviewCount: 2,
+      credits: 4,
+      isRare: false,
       reviews: [
         {
           id: 'r4',
@@ -109,6 +113,8 @@ export const initMockData = (): Course[] => {
       tags: ['干货满满', '需要基础'],
       tagTypes: ['success', 'gray'],
       reviewCount: 3,
+      credits: 4,
+      isRare: false,
       reviews: [
         {
           id: 'r6',
@@ -163,6 +169,8 @@ export const initMockData = (): Course[] => {
       tags: ['轻松过', '给分大方', '不考勤'],
       tagTypes: ['success', 'success', 'success'],
       reviewCount: 2,
+      credits: 2,
+      isRare: true,
       reviews: [
         {
           id: 'r9',
@@ -204,6 +212,8 @@ export const initMockData = (): Course[] => {
       tags: ['点名严格', '作业超多'],
       tagTypes: ['danger', 'danger'],
       reviewCount: 2,
+      credits: 3,
+      isRare: false,
       reviews: [
         {
           id: 'r11',
@@ -245,6 +255,8 @@ export const initMockData = (): Course[] => {
       tags: ['干货满满', '轻松过', '给分大方'],
       tagTypes: ['success', 'success', 'success'],
       reviewCount: 3,
+      credits: 3,
+      isRare: true,
       reviews: [
         {
           id: 'r13',
@@ -299,6 +311,8 @@ export const initMockData = (): Course[] => {
       tags: ['挂科率高', '作业超多'],
       tagTypes: ['danger', 'danger'],
       reviewCount: 2,
+      credits: 2,
+      isRare: false,
       reviews: [
         {
           id: 'r16',
@@ -340,6 +354,8 @@ export const initMockData = (): Course[] => {
       tags: ['轻松过', '干货满满'],
       tagTypes: ['success', 'success'],
       reviewCount: 2,
+      credits: 2,
+      isRare: false,
       reviews: [
         {
           id: 'r18',
@@ -381,6 +397,8 @@ export const initMockData = (): Course[] => {
       tags: ['需要基础', '偏理论'],
       tagTypes: ['gray', 'gray'],
       reviewCount: 2,
+      credits: 4,
+      isRare: false,
       reviews: [
         {
           id: 'r20',
@@ -422,6 +440,8 @@ export const initMockData = (): Course[] => {
       tags: ['轻松过', '给分大方', '课程水'],
       tagTypes: ['success', 'success', 'danger'],
       reviewCount: 2,
+      credits: 2,
+      isRare: false,
       reviews: [
         {
           id: 'r22',

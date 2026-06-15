@@ -1,9 +1,10 @@
 import { NavLink } from 'react-router-dom';
-import { Home, GitCompare, User, Search } from 'lucide-react';
+import { Home, GitCompare, User, Dices } from 'lucide-react';
 
 const tabs = [
   { path: '/', icon: Home, label: '选课广场' },
   { path: '/compare', icon: GitCompare, label: '课程对比' },
+  { path: '/game', icon: Dices, label: '大富翁' },
   { path: '/mine', icon: User, label: '我的' },
 ];
 
